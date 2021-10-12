@@ -6,7 +6,7 @@ const loadData=()=>{
          
     }
     else{
-       url=`https://api.openweathermap.org/data/2.5/weather?q=${searchText.value}&appid=24e80609c6feb6e10363ccc5b41db6e1`
+       url=`https://api.openweathermap.org/data/2.5/weather?q=${searchText.value}&appid=24e80609c6feb6e10363ccc5b41db6e1&units=metric`
      fetch(url)
      .then(response=>response.json())
      .then(data=>displayWeather(data))
@@ -18,12 +18,14 @@ const loadData=()=>{
 const displayWeather=(data)=>{
     const weather=document.getElementById("weather")
     weather.textContent=""
-    console.log(data); 
+    
         const div=document.createElement("div")
+        const imageUrl=`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+        
         div.innerHTML=`
-        <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+        <img src=${imageUrl} alt="">
         <h1>${data.name}</h1>
-        <h3><span>${(data.main.temp-273.15).toFixed(2)}</span>&deg;C</h3>
+        <h3><span>${data.main.temp}</span>&deg;C</h3>
         <h1 class="lead">${data.weather[0].main}</h1>
         `
         weather.appendChild(div);
